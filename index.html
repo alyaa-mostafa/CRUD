@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="w-75 py-5 mx-auto ">
+            <h1>Product Mangement System</h1>
+            <div class="form-group mb-3">
+                <label for="productName" class="mb-2">productName:</label>
+                <input oninput="validation()"  type="text" class="form-control" id="productName" placeholder="Enter Name">
+                <p class="text-danger d-none" id="wrongName">Invalid name (suppose start with capital character)</p>
+            </div>
+            <div class="form-group mb-3">
+                <label for="productPrice" class="mb-2">productPrice:</label>
+                <input type="number" class="form-control" id="productPrice" placeholder="Enter Name">
+            </div>
+            <div class="form-group mb-3">
+                <label for="productModel" class="mb-2">productModel:</label>
+                <input type="text" class="form-control" id="productModel" placeholder="Enter Name">
+            </div>
+            <div class="form-group mb-3">
+                <label for="productDEscription" class="mb-2">productDEscription:</label>
+                <textarea name="productDEscription" id="productDEscription" class="form-control"></textarea>
+            </div>
+            <button id="addBtn" class="btn btn-primary d-block mb-3" onclick=" AddProduct()">Add Product</button>
+            <button id="updateBtn" class="btn btn-danger d-none" onclick=" AddProduct()">Update Product</button>
+        </div>
+        <div class="w-75 py-4 mx-auto ">
+            <h4>Search</h4>
+            <input oninput="serchByName(this.value)" type="text" class="form-control">
+        </div>
+        <table class="table text-center w-75 mx-auto">
+            <thead>
+                <th>Index</th>
+                <th>productName</th>
+                <th>productPrice</th>
+                <th>productModel</th>
+                <th>productDEscription</th>
+                <th>Update</th>
+                <th>Delet</th>
+            </thead>
+            <tbody id="tBody">
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+
+
+
+
+    <script src="./js/bootstrap.bundle.min.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+</html>
