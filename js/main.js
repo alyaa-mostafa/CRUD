@@ -5,6 +5,7 @@ var productDEscription =document.getElementById("productDEscription");
 var productlList =[]
 var addBtn= document.getElementById("addBtn")
 var updateBtn= document.getElementById("updateBtn")
+var indexFlag;
 
 if(localStorage.getItem("productArray") !=null){
     productlList= JSON.parse(localStorage.getItem("productArray"))  
@@ -18,29 +19,25 @@ function AddProduct(){
             price:productPrice.value,
             model:productModel.value,
             des:productDEscription.value
-        }
+        };
         productlList.push(product);
         localStorage.setItem("productArray", JSON.stringify(productlList))
         displayProduct(productlList);
-        clearForm() 
-        console.log(productlList);
-    }else{
-        // alert("invalid")
+        clearForm(); 
     }
-  
 }
-function clearForm() {
+function clearForm(){
     productName.value= "";
     productPrice.value= "";
     productModel.value ="";
     productDEscription.value ="";
-}
+};
 function displayProduct(products){
     var cartona = ``;
     for ( var i = 0 ; i < products.length ; i ++){
         cartona += `<tr>
-        <td>${[i]}</td>
-        <td>${products[i].NewName?products[i].NewName: products[i].Name}</td>
+        <td>${[i + 1]}</td>
+        <td>${products[i].NewName?products[i].NewName:products[i].Name}</td>
         <td>${products[i].price}</td>
         <td>${products[i].model}</td>
         <td>${products[i].des}</td>
@@ -62,27 +59,38 @@ function deleteProduct(productIndex){
 }
 
 function serchByName(term){
-    var foundItems = []
+    var foundItems = [];
     for(var i = 0 ; i < productlList.length ; i++){
-        if(productlList[i].Name.toLowerCase().includes(term.toLowerCase()) ==true){
+        if(productlList[i].Name.toLowerCase().includes(term.toLowerCase()) ===true){
         productlList[i].NewName =productlList[i].Name.toLowerCase().replace(term.toLowerCase(),  `<span class="text-danger">${term}</span>` )
-            console.log("found", i,  productlList[i].NewName)
+            // console.log("found", i,  productlList[i].NewName)
             foundItems.push(productlList[i])
         }
     }
-    displayProduct(foundItems)
+    displayProduct(foundItems);
 }
 
-function  setFormForUpdate(i){
+function  setFormForUpdate(index){
     addBtn.classList.replace('d-block' , 'd-none');
     updateBtn.classList.replace('d-none' , 'd-block');
-    productName.value = productlList[i].Name
-    productPrice.value =  productlList[i].price
-    productModel.value =  productlList[i].model
-    productDEscription.value =  productlList[i].des
+    productName.value = productlList[index].Name;
+    productPrice.value =  productlList[index].price;
+    productModel.value =  productlList[index].model;
+    productDEscription.value =  productlList[index].des;
+    indexFlag = index;
+};
 
-}
-
+function updateProducts(indexFlag){
+    productlList[indexFlag].Name= productName.value;
+    productlList[indexFlag].price= productPrice.value;
+    productlList[indexFlag].model=productModel.value;
+    productlList[indexFlag].des=productDEscription.value;
+    localStorage.setItem("productArray", JSON.stringify(productlList))
+    displayProduct(productlList);
+    addBtn.classList.replace('d-none' , 'd-block');
+    updateBtn.classList.replace('d-block' , 'd-none');
+    clearForm()
+};
 
 function validation(){
     var regex = /^[A-Z][a-z]{3,8}$/
